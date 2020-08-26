@@ -238,7 +238,7 @@ public class ColorPickerDialog {
 						ColorPickerDialog.this.listener.onOk(ColorPickerDialog.this, tv_color.getText().toString());
 						dialog.dismiss();
 					}else {
-						toast.setText("輸入錯誤，請重新輸入\n輸入格式：#ff000000");
+						toast.setText(context.getString(R.string.input_error));
 						toast.setDuration(Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();
