@@ -77,7 +77,7 @@ install {
         pom.project {
             packaging 'aar'
             //專案描述，隨意填
-            name 'custom Sdk'
+            name 'ColorPickerDialog'
             url siteUrl
             licenses {
                 license {
