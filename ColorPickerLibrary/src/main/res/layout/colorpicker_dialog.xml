@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/color_picker_bg"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/viewContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clipToPadding="false"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp">
+
+            <com.example.ColorPickerLibrary.ColorPickerSquare
+                android:id="@+id/viewSatBri"
+                android:layout_width="@dimen/hsvWidth"
+                android:layout_height="@dimen/hsvHeight"
+                android:layerType="software" />
+
+            <ImageView
+                android:id="@+id/viewHue"
+                android:layout_width="@dimen/hueWidth"
+                android:layout_height="@dimen/hsvHeight"
+                android:layout_marginLeft="@dimen/spacer"
+                android:layout_toRightOf="@id/viewSatBri"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/hue" />
+
+
+
+            <ImageView
+                android:id="@+id/cursor"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:src="@drawable/cursor" />
+
+
+            <ImageView
+                android:id="@+id/target"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/target" />
+
+            <RelativeLayout
+                android:id="@+id/alpha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewSatBri"
+                android:paddingTop="@dimen/spacer">
+
+                <ImageView
+                    android:id="@+id/alphaCheckered"
+                    android:layout_width="@dimen/alphaWidth"
+                    android:layout_height="@dimen/hueWidth"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/tiled" />
+
+                <View
+                    android:id="@+id/overlay"
+                    android:layout_width="@dimen/alphaWidth"
+                    android:layout_height="@dimen/hueWidth" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/alphaCursor"
+                android:layout_width="5dp"
+                android:layout_height="36dp"
+                android:background="@drawable/alpha_cursor" />
+
+            <LinearLayout
+                android:id="@+id/state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/alpha"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/spacer"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <FrameLayout
+                    android:layout_width="60dp"
+                    android:layout_height="30dp" >
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/tiled" />
+
+                    <View
+                        android:id="@+id/oldColor"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="#faa" />
+                </FrameLayout>
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:paddingLeft="@dimen/spacer"
+                    android:paddingRight="@dimen/spacer"
+                    android:src="@drawable/arrow_right" />
+
+                <FrameLayout
+                    android:layout_width="60dp"
+                    android:layout_height="30dp" >
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/tiled" />
+
+                    <View
+                        android:id="@+id/newColor"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="#aaf" />
+                </FrameLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/state"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp">
+
+            <EditText
+                android:id="@+id/tv_color"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_bg"
+                android:gravity="center"
+                android:padding="5dp"
+                android:maxLength="9"
+                android:digits="1234567890abcdefABCDEF#"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg3"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/cancel"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/enter"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_bg3"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/enter"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

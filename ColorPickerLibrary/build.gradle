@@ -1,0 +1,134 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+version = "0.0.1"
+def siteUrl = 'https://github.com/xinooo/ColorPickerDialog'    // project homepage
+def gitUrl = 'https://github.com/xinooo/ColorPickerDialog.git' // project git
+def libName = "ColorPickerDialog"
+group = "com.github.xinooo"
+
+//生成原始檔
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+//生成Javadoc文件
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+//文件打包成jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+//拷貝javadoc檔案
+task copyDoc(type: Copy) {
+    from "${buildDir}/docs/"
+    into "docs"
+}
+
+//上傳到JCenter所需要的原始碼檔案
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom.artifactId = 'ColorPickerDialog'
+        pom.project {
+            packaging 'aar'
+            //專案描述，隨意填
+            name 'custom Sdk'
+            url siteUrl
+            licenses {
+                license {
+                    //開源協議
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+            developers {
+                developer {
+                    //開發者的個人資訊
+                    id 'xinooo'
+                    name 'xinooo'
+                    email 'cody9906121@gmail.com'
+                }
+            }
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+        }
+    }
+}
+
+//上傳到JCenter
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")    //讀取 local.properties 檔案裡面的 bintray.user
+    key = properties.getProperty("bintray.apikey")   //讀取 local.properties 檔案裡面的 bintray.apikey
+    configurations = ['archives']
+    pkg {
+        //這裡的repo值必須要和你建立Maven倉庫的時候的名字一樣
+        repo = "maven"
+        //釋出到JCenter上的專案名字
+        name = libName
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+javadoc {
+    options{
+        //如果你的專案裡面有中文註釋的話，必須將格式設定為UTF-8，不然會出現亂碼
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+}
